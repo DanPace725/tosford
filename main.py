@@ -29,12 +29,13 @@ with st.sidebar:
 
 # Send the initial prompt to the API
 initial_prompt = prompts[selected_prompt]
+st.write(initial_prompt)
 
 # Get Response Function -----
 @st.cache
 def get_response(prompt):
     response = openai.Completion.create(
-        model="text-curie-001",
+        model="text-davinci-003",
         prompt=prompt,
         temperature=0.7,
         max_tokens=1024,
@@ -51,14 +52,12 @@ def get_response(prompt):
 # Write the response
 
 if begin:
-    st.spinner("Thinking...")
     response = get_response(initial_prompt)
     st.write("Geeting:", response)
 
 
 # Get original text input
-with st.container():
-    original_text = st.text_area("Enter your text here:")
+original_text = st.text_area("Enter your text here:")
 
 
 # Make API request and display response
@@ -66,7 +65,7 @@ with st.container():
 
 if original_text:
     st.spinner("Working...")
-    response = get_response(original_text)
+    response = get_response(initial_prompt & original_text)
              
     if response:
         st.write("Generated text:")
