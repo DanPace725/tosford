@@ -26,12 +26,10 @@ st.write(initial_prompt)
 begin = st.button("Begin")
 
 if begin:
-    response = cf.get_response(initial_prompt)
-    st.write("Geeting:", response)
+    user_input1 = st.text_area("Enter your text here:")
 
-    if response !=  None:
-        user_input1 = st.text_area("Enter your text here:")
-
-        if user_input1:
-            response2 = cf.get_response(initial_prompt + " " + user_input1)
-            st.write(response2)
+enter = st.button("Enter")
+if enter:
+    cf.show_spinner("Thinking...")
+    response2 = cf.get_response(initial_prompt + " " + user_input1)
+    st.write(response2)
