@@ -1,9 +1,7 @@
 import streamlit as st
-import requests
-import os
-import json
-import openai
-import time
+import requests, os, json, openai
+import functions 
+
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
@@ -21,58 +19,25 @@ with st.sidebar:
     with open('prompts.json') as f:
         prompts = json.load(f)
     selected_prompt = c.selectbox("Select a Prompt", list(prompts.keys()))
-    begin = c.button("Begin")
+   
 
     
-
-    
+casual = functions.get_prompt("Casual")
+st.write(casual)    
 
 # Send the initial prompt to the API
 initial_prompt = prompts[selected_prompt]
 st.write(initial_prompt)
-
-# Get Response Function -----
-@st.cache
-def get_response(prompt):
-    response = openai.Completion.create(
-        model="text-davinci-003",
-        prompt=prompt,
-        temperature=0.7,
-        max_tokens=1024,
-        top_p=1,
-        frequency_penalty=0,
-        presence_penalty=0,
-    )
-
-    if response:
-        return response["choices"][0]["text"]
-    else:
-        return None
-
-# Write the response
+begin = st.button("Begin")
 
 if begin:
-    response = get_response(initial_prompt)
+    response = functions.get_response(initial_prompt)
     st.write("Geeting:", response)
 
+if response !=  None:
+    user_input1 = st.text_area("Enter your text here:")
 
-# Get original text input
-original_text = st.text_area("Enter your text here:")
-
-
-# Make API request and display response
-# run some long-running and blocking code
-
-if original_text:
-    st.spinner("Working...")
-    response = get_response(initial_prompt & original_text)
-             
-    if response:
-        st.write("Generated text:")
-        st.write(response)
-    else:
-        st.write("An error occurred.")
-    st.success("All done, now leave me alone")
-
+if user_input1:
+    response2 = functions.get_response(initial_prompt + " " + user_input1)
 
 
