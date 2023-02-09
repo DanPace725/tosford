@@ -3,6 +3,7 @@ import openai
 import json
 
 # Get Response Function -----
+@st.cache
 def get_response(prompt):
 
     response = openai.Completion.create(

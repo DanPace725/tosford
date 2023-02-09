@@ -1,6 +1,6 @@
 import streamlit as st
 import requests, os, json, openai
-import functions 
+import custom_functions as cf
 
 
 openai.api_key = os.getenv("OPENAI_API_KEY")
@@ -20,24 +20,18 @@ with st.sidebar:
         prompts = json.load(f)
     selected_prompt = c.selectbox("Select a Prompt", list(prompts.keys()))
    
-
-    
-casual = functions.get_prompt("Casual")
-st.write(casual)    
-
 # Send the initial prompt to the API
 initial_prompt = prompts[selected_prompt]
 st.write(initial_prompt)
 begin = st.button("Begin")
 
 if begin:
-    response = functions.get_response(initial_prompt)
+    response = cf.get_response(initial_prompt)
     st.write("Geeting:", response)
 
-if response !=  None:
-    user_input1 = st.text_area("Enter your text here:")
+    if response !=  None:
+        user_input1 = st.text_area("Enter your text here:")
 
-if user_input1:
-    response2 = functions.get_response(initial_prompt + " " + user_input1)
-
-
+        if user_input1:
+            response2 = cf.get_response(initial_prompt + " " + user_input1)
+            st.write(response2)
