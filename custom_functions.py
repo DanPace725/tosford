@@ -7,7 +7,7 @@ import json, time
 def get_response(prompt):
 
     response = openai.Completion.create(
-        model="text-curie-001",
+        model="text-davinci-003",
         prompt=prompt,
         temperature=0.7,
         max_tokens=1024,
@@ -19,7 +19,7 @@ def get_response(prompt):
     if response:
         return response["choices"][0]["text"]
     else:
-        return None
+        return "There was a problem"
 
 # Get Prompt Function -----
 def get_prompt(prompt_id):
@@ -27,6 +27,3 @@ def get_prompt(prompt_id):
         prompts = json.load(f)
     return prompts.get(prompt_id)
 
-def show_spinner(text):
-    with st.spinner(text):
-        time.sleep(5)

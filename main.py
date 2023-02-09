@@ -23,13 +23,13 @@ with st.sidebar:
 # Send the initial prompt to the API
 initial_prompt = prompts[selected_prompt]
 st.write(initial_prompt)
-begin = st.button("Begin")
-
-if begin:
-    user_input1 = st.text_area("Enter your text here:")
+user_input1 = st.text_area("Enter your text here:")
 
 enter = st.button("Enter")
+    
 if enter:
-    cf.show_spinner("Thinking...")
-    response2 = cf.get_response(initial_prompt + " " + user_input1)
-    st.write(response2)
+    with st.spinner("Thinking..."):
+        response2 = cf.get_response(initial_prompt + " " + user_input1)
+    
+        st.write(response2)
+    st.success("Alright, I'm done, now leave me alone.")
