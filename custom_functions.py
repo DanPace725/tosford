@@ -9,20 +9,15 @@ def get_response(prompt):
     response = openai.Completion.create(
         model="text-davinci-003",
         prompt=prompt,
-        temperature=0.9,
+        temperature=2,
         max_tokens=2000,
         top_p=1,
-        frequency_penalty=0,
+        frequency_penalty=0.6,
         presence_penalty=0.6,
       
     )
     if response:
-        return {
-    "text": response["choices"][0]["text"],
-    "total_tokens": response["usage"]["total_tokens"]
-    }
-
-  
+        return response["choices"][0]["text"]
     else:
         return "There was a problem"
 

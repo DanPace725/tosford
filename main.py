@@ -25,6 +25,7 @@ user_input1 = st.text_input("Enter your text here:")
 enter = st.button("Enter")
     
 if enter:
-    response2 = cf.get_response(initial_prompt + " " + user_input1)
-    st.write(response2)
+    text = cf.get_response(initial_prompt + " " + user_input1)
+    st.write(text)
+    
     
