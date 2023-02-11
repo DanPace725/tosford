@@ -16,13 +16,9 @@ def get_response(prompt):
         presence_penalty=0.6,
       
     )
-    
     if response:
-        return {
-        "text": response["choices"][0]["text"],
-        "total_tokens": response["usage"]["total_tokens"]
-        }
-
+        return response["choices"][0]["text"], response["usage"]["total_tokens"]
+  
     else:
         return "There was a problem"
 
