@@ -17,7 +17,11 @@ def get_response(prompt):
       
     )
     if response:
-        return response["choices"][0]["text"], response["usage"]["total_tokens"]
+        return {
+    "text": response["choices"][0]["text"],
+    "total_tokens": response["usage"]["total_tokens"]
+    }
+
   
     else:
         return "There was a problem"
